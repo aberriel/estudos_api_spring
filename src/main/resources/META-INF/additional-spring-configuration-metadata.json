@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "uber.application.name",
+    "type": "java.lang.String",
+    "description": "A description for 'uber.application.name'"
+  },
+  {
+    "name": "uber.application.id",
+    "type": "java.lang.String",
+    "description": "A description for 'uber.application.id'"
+  },
+  {
+	"name": "uber.application.secret",
+	"type": "java.lang.String",
+	"description": "Chave para acesso à API da Uber"
+  }
+]}
