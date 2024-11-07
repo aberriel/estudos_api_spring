@@ -1,0 +1,26 @@
+server:
+  port: 8089
+
+spring:
+  application:
+    name: estudos-api-spring
+  datasource:
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://localhost;databaseName=ESTUDOS_API_SPRING
+    username: sa
+    password: Al,2402,TBD@
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.SQLServer2012Dialect
+
+logging:
+  file:
+    name: /logs/estudos_api_spring/api_log.log
+  pattern:
+    console: '%date|%clr(%-5level)|%thread|%clr(%-40.40logger{60}.%M:%L){cyan}|%msg%n%rootException'
+    file: '%date|%clr(%-5level)|%thread|%mdc{login}|%mdc{session_id}|%mdc{server_ip}|%mdc{user_ip}|%logger{60}.%M:%L|%msg%n%rootException'
+  level:
+    root: INFO
