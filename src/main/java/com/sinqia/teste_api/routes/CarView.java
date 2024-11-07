@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -20,33 +21,39 @@ public class CarView {
 	private CarroService service;
 
 	@GetMapping()
-	public Iterable get() {
-		//List<Carro> carros = service.getCarros();
-		//return ResponseEntity.ok(carros);
-		return service.getCarros();
+	public ResponseEntity<Iterable<Carro>> get() {
+		return ResponseEntity.ok(service.getCarros());
+		// Abaixo uma forma alternativa de fazer o acima
+		// return new ResponseEntity<>(service.getCarros(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public Optional<Carro> get(@PathVariable("id") Long id) {
+	public ResponseEntity get(@PathVariable("id") Long id) {
 		// Optional: quando o objeto é nulo
+		Optional<Carro> carro = service.getCarroById(id);
+
+		// Formato com IF-ELSE
 		/*
-		Optional<CarroDTO> carro = service.getCarroById(id);
-		// Internamente retorno o status 200 (OK)
-		return carro.map(c -> ResponseEntity.ok(carro))
-				    .orElse(ResponseEntity.notFound().build());
+		if(carro.isPresent()) {
+			return ResponseEntity.ok(carro.get);
+		}
+		else {
+			return ResponseEntity.notFound().build();
+		}
 		*/
-		return service.getCarroById(id);
+
+		// Formato com ternário
+		return carro.isPresent() ?
+				ResponseEntity.ok(carro.get()) :
+				ResponseEntity.notFound().build();
 	}
 	
 	@GetMapping("/tipo/{tipo}")
-	public Iterable<Carro> getCarrosByTipo(@PathVariable("tipo") String tipo) {
-		/*
-		List<CarroDTO> carros = service.getCarrosByTipo(tipo);
+	public ResponseEntity getCarrosByTipo(@PathVariable("tipo") String tipo) {
+		List<Carro> carros = (List<Carro>) service.getCarrosByTipo(tipo);
 		return carros.isEmpty() ?
-					ResponseEntity.noContent().build() :
-					ResponseEntity.ok(carros);
-		*/
-		return service.getCarrosByTipo(tipo);
+				ResponseEntity.noContent().build() :
+				ResponseEntity.ok(carros);
 	}
 	
 	@PostMapping

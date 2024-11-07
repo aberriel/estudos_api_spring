@@ -5,18 +5,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+// Versão com os getter e os setter
 /*
  * A anotação @Data já adiciona os getter e setter
  */
-
-@NoArgsConstructor
-@Data
+/*
 @Entity
 public class Carro {
-	
 	public Carro() { }
 
 	public Carro(Long id, String nome) {
@@ -76,4 +73,34 @@ public class Carro {
 	private String tipo;
 	public String getTipo() { return this.tipo; }
 	public void setTipo(String tipo) { this.tipo = tipo; }
+}
+*/
+
+@Entity
+@Data
+public class Carro {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(name="nome", length=255, nullable=false)
+	private String nome;
+
+	@Column(name="descricao", length=255, nullable=true)
+	private String descricao;
+
+	@Column(name="urlFoto", length=255, nullable=true)
+	private String urlFoto;
+
+	@Column(name="urlVideo", length=255, nullable=true)
+	private String urlVideo;
+
+	@Column(name="latitude", length=255, nullable=True)
+	private String latitude;
+
+	@Column(name="longitude", length=255, nullable=true)
+	private String longitude;
+
+	@Column(name="tipo", length=255, nullable=true)
+	private String tipo;
 }
