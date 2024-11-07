@@ -19,6 +19,9 @@
 .springBeans
 .sts4-cache
 
+### Maven directories
+target/
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
